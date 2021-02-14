@@ -77,7 +77,7 @@
                   ></v-text-field>
                 </template>
                 <v-date-picker
-                  v-model="form.date"
+                  v-model="form.date_created"
                   no-title
                   @input="menu1 = false"
                 ></v-date-picker>
@@ -194,7 +194,7 @@ export default {
         name: "",
         address: "",
         phone_number: "",
-        date: "",
+        date_created: "",
         name_of_deceased: "",
         type_of_casket: "",
         amount: "",
@@ -211,9 +211,9 @@ export default {
     }),
     submit() {
       this.loading = true;
-      this.addService(this.form).then(() => {
+      this.addService(this.form).then((response) => {
         this.loading = false;
-        alert("success");
+        alert(response.data);
       });
     },
     change: function() {
@@ -231,8 +231,8 @@ export default {
       user: "auth/user",
     }),
     formattedDate() {
-      var x = Date.parse(this.form.date);
-      return this.form.date ? format(x, "do MMM yyyy") : "";
+      var x = Date.parse(this.form.date_created);
+      return this.form.date_created ? format(x, "do MMM yyyy") : "";
     },
   },
 };

@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <v-card class="mx-auto" max-width="800" outlined>
+    <v-card class="mx-auto" max-width="500" outlined style="padding:20px;">
       <form>
         <h2 class="subheading mx-10">Log-in Form</h2>
         <v-row class="mx-auto">
           <v-col class="cols 4">
             <v-text-field
               prepend-icon="account_circle"
-              v-model="form.email"
+              v-model="form.name"
               label="Username"
             ></v-text-field>
           </v-col>
@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       form: {
-        email: "",
+        name: "",
         password: "",
         branch_id: "",
       },
@@ -58,6 +58,7 @@ export default {
 
     // async means to wait for the response back to api
     submit() {
+      console.log(this.form);
       this.loading = true;
       this.signIn(this.form)
         .then(() => {
