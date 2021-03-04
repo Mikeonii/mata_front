@@ -204,7 +204,7 @@ export default {
   methods: {
     async export_to_excel() {
       window.open(
-        "http://mata.net/print_summary/" +
+        "http://127.0.0.1:8000/print_summary/" +
           this.months.indexOf(this.selected_month) +
           "/" +
           this.selected_year +

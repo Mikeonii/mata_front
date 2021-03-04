@@ -44,7 +44,6 @@ export default {
       form: {
         name: "",
         password: "",
-        branch_id: "",
       },
       loading: false,
     };

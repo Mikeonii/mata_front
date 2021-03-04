@@ -1,14 +1,14 @@
 <template>
   <div>
     <!-- <Navbar /> -->
-    <h2 class="subheading grey--text">Welcome to Dashboard</h2>
+    <!-- <h2 class="subheading grey--text">Welcome to Dashboard</h2> -->
     <v-container class="ma-2">
       <!-- <p v-for="service in Services" :key="service.id">
         {{ service.id }}: {{ service.name }}
       </p> -->
       <v-card>
         <v-card-title
-          >Registered Accounts
+          >Registered Contracts
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -19,30 +19,36 @@
 
         <v-card-text>
           <v-row>
-            <v-btn color="primary" text @click="show">
-              <v-icon dark>mdi-account-circle</v-icon>View Profile</v-btn
-            >
-            <addPaymentModal :selected="selected" />
-            <v-btn disabled color="primary" text>Selected: {{ sel_msg }}</v-btn>
+            <!-- <v-btn disabled color="primary" text>Selected: {{ sel_msg }}</v-btn> -->
           </v-row>
         </v-card-text>
 
         <v-data-table
           v-model="selected"
-          show-select
-          :single-select="singleSelect"
           :loading="table_loading"
           loading-text="Loading... Please wait"
           :headers="headers"
           :items="Services"
           item-key="id"
-          :sort-desc="[false, true]"
+          sort-desc="false"
           multi-sort
           class="elevation-1 mx-5 mb-4 mt-3"
           :search="search"
+          sort-by="created_at"
+          items-per-page="5"
         >
           <!-- <template>
             <td @click="go_profile(service.id)"></td>
+          </template> -->
+
+          <template v-slot:[`item.profile`]="{ item }">
+            <v-icon color="primary" class="mr-2" @click="show(item)">
+              mdi-account-circle
+            </v-icon>
+            <span class="caption blue--text"><strong>Profile</strong></span>
+          </template>
+          <!-- <template v-slot:[`item.add_payment`]="{ item }">
+            <addPaymentModal :selected="item" />
           </template> -->
         </v-data-table>
       </v-card>
@@ -79,6 +85,8 @@ export default {
       table_loading: false,
       search: "",
       headers: [
+        { text: "", value: "profile" },
+
         {
           text: "S/R No.",
           align: "start",
@@ -151,8 +159,8 @@ export default {
       get_services: "services/get",
     }),
 
-    show() {
-      this.$router.push(`/profile/${this.selected[0].id}`);
+    show(item) {
+      this.$router.push(`/profile/` + item.id);
     },
   },
 

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-btn text color="warning" @click.stop="clicked()">
-      <v-icon dark>mdi-plus</v-icon>Add Payment</v-btn
+    <v-btn text color="warning" small @click.stop="clicked()">
+      Add Payment</v-btn
     >
 
     <v-dialog v-model="dialog" max-width="800" class="">

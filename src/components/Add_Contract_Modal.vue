@@ -102,7 +102,15 @@
               ></v-text-field>
             </v-col>
             <v-col cols="4">
-              <v-select
+              <v-text-field
+                label="Type of Casket"
+                v-model="form.type_of_casket"
+                prepend-icon="event"
+                hint="Enter Type of Casket"
+                persistent-hint
+                :rules="rules.number_rule"
+              ></v-text-field>
+              <!-- <v-select
                 :items="type_of_casket_list"
                 v-model="form.type_of_casket"
                 name="category"
@@ -110,7 +118,7 @@
                 label="Select a Casket"
                 return-object
                 item-value="name"
-              />
+              /> -->
             </v-col>
             <v-col cols="4">
               <v-text-field label="Amount" v-model="form.amount"></v-text-field>
@@ -213,7 +221,8 @@ export default {
       this.loading = true;
       this.addService(this.form).then((response) => {
         this.loading = false;
-        alert(response.data);
+        alert("Successfully Added!");
+        location.reload();
       });
     },
     change: function() {

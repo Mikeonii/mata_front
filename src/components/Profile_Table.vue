@@ -277,7 +277,7 @@ export default {
       const id = this.$route.params.service_id;
       const branch_id = this.service.data.branch;
       window.open(
-        "http://mata.net/print_contract/" +
+        "http://app-server.matadirectservice.com/print_contract/" +
           id +
           "/" +
           branch_id +
