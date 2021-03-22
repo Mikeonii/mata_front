@@ -6,7 +6,7 @@
     </h2>
     <p>
       Contact the administrator for more information:
-      janmichaelbesinga873@gmail.com
+      janmichaelbesinga873@gmail.com/09306550892
     </p>
   </div>
 </template>

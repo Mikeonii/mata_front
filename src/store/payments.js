@@ -60,9 +60,9 @@ export default ({
             commit('INSERT_TO_PAYMENTS', form);
 
         },
-        async del_payment({ }, payment_id) {
-
-            await axios.delete("/payment/" + payment_id);
+        async del_payment({ commit }, payment_id) {
+            let response = await axios.delete("/payment/" + payment_id);
+            commit('services/EDIT_STATE', response.data, { root: true });
         },
         async edit_payment({ }, form) {
             let response = await axios.put("/payment", form);

@@ -1,24 +1,25 @@
 <template>
   <div>
-    <v-btn @click.stop="dialog = true" class="ms-10 " fab dark color="error">
-      <v-icon dark>mdi-plus</v-icon>
+    <v-btn @click.stop="dialog = true" class="ms-10 " text color="primary">
+      <v-icon dark>mdi-plus</v-icon>Add New Service Contract
     </v-btn>
 
     <v-dialog v-model="dialog" max-width="800" class="">
       <v-card>
-        <v-img
+        <v-toolbar color="primary" dark>
+          <span class="headline mr-2">Add Service Contract</span>
+          <span class="ml-10">Form for adding a new service contract</span>
+        </v-toolbar>
+        <!-- <v-img
           class="white--text align end"
           height="200"
           src="https://i.imgur.com/Y3hqiHf.png"
-        ></v-img>
-        <v-card-title class="headline">Add Contract</v-card-title>
-        <v-card-subtitle
-          >Form for adding a new service contract</v-card-subtitle
-        >
+        ></v-img> -->
 
         <!-- form -->
         <form class="container" ref="form">
           <v-row class="mx-5">
+            <!-- CONTRACT NUMBER -->
             <v-col cols="4">
               <v-text-field
                 label="Contract Number"
@@ -26,16 +27,22 @@
                 :rules="rules.number_rule"
                 type="number"
                 prepend-icon="folder"
+                hint="Enter Contract Number"
+                persistent-hint
               ></v-text-field>
             </v-col>
+            <!-- CONTRACT NAME -->
             <v-col cols="4">
               <v-text-field
                 label="Name"
                 v-model="form.name"
                 prepend-icon="mdi-face-outline"
                 :rules="rules.number_rule"
+                hint="Enter Fullname"
+                persistent-hint
               ></v-text-field>
             </v-col>
+            <!-- ADDRESS -->
             <v-col cols="4">
               <v-text-field
                 label="Address"
@@ -46,29 +53,42 @@
                 :rules="rules.number_rule"
               ></v-text-field>
             </v-col>
-
+            <!-- PHONE NUMBER -->
             <v-col cols="4">
               <v-text-field
                 label="Phone Number"
                 v-model="form.phone_number"
                 prepend-icon="mdi-cellphone-android"
                 :rules="rules.number_rule"
+                hint="+639306550894"
+                persistent-hint
               ></v-text-field>
             </v-col>
-            <v-col cols="12" lg="6">
+            <!-- STATUS -->
+            <v-col cols="4">
+              <v-text-field
+                label="Status"
+                v-model="form.status"
+                prepend-icon=""
+                :rules="rules.number_rule"
+                hint="Single/Married etc."
+                persistent-hint
+              ></v-text-field>
+            </v-col>
+            <!-- DATE CREATED -->
+            <v-col cols="4">
               <v-menu
-                ref="menu1"
-                v-model="menu1"
+                ref="date_created"
+                v-model="date_created"
                 transition="scale-transition"
                 offset-y
                 max-width="290px"
                 min-width="290px"
               >
-                <!-- <v-text-field slot="activator" aria-label="Date"></v-text-field> -->
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    :value="formattedDate"
-                    label="Date"
+                    v-model="form.date_created"
+                    label="Date Created"
                     hint="YYYY-MM-DD format"
                     persistent-hint
                     prepend-icon="event"
@@ -79,10 +99,11 @@
                 <v-date-picker
                   v-model="form.date_created"
                   no-title
-                  @input="menu1 = false"
+                  @input="date_created = false"
                 ></v-date-picker>
               </v-menu>
             </v-col>
+            <!-- NAME OF DECEASED -->
             <v-col cols="4">
               <v-text-field
                 label="Name of Deceased"
@@ -91,39 +112,138 @@
                 :rules="rules.number_rule"
               ></v-text-field>
             </v-col>
-            <v-col cols="4">
-              <v-text-field
-                label="Deceased Date Info"
-                v-model="form.deceased_date"
-                prepend-icon="event"
-                hint="Born: YYYY-mm-dd/ Died: YYY-mm-dd"
-                persistent-hint
-                :rules="rules.number_rule"
-              ></v-text-field>
+
+            <!-- DATE OF BIRTH -->
+            <v-col cols="3">
+              <v-menu
+                ref="date_of_birth"
+                v-model="date_of_birth"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+              >
+                <!-- <v-text-field slot="activator" aria-label="Date"></v-text-field> -->
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="form.date_of_birth"
+                    :value="formattedDate"
+                    label="Date of Birth"
+                    hint="YYYY-MM-DD format"
+                    persistent-hint
+                    prepend-icon="event"
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="form.date_of_birth"
+                  no-title
+                  @input="menu1 = false"
+                ></v-date-picker>
+              </v-menu>
             </v-col>
+            <!-- DATE OF DEATH -->
+            <v-col cols="4">
+              <v-menu
+                v-model="date_of_death"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+              >
+                <!-- <v-text-field slot="activator" aria-label="Date"></v-text-field> -->
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="form.date_of_death"
+                    label="Date of Death"
+                    hint="YYYY-MM-DD format"
+                    persistent-hint
+                    prepend-icon="event"
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="form.date_of_death"
+                  no-title
+                  @input="menu1 = false"
+                ></v-date-picker>
+              </v-menu>
+            </v-col>
+
             <v-col cols="4">
               <v-text-field
                 label="Type of Casket"
                 v-model="form.type_of_casket"
-                prepend-icon="event"
                 hint="Enter Type of Casket"
                 persistent-hint
                 :rules="rules.number_rule"
               ></v-text-field>
-              <!-- <v-select
-                :items="type_of_casket_list"
-                v-model="form.type_of_casket"
-                name="category"
-                item-text="name"
-                label="Select a Casket"
-                return-object
-                item-value="name"
-              /> -->
+            </v-col>
+            <v-col cols="2">
+              <v-text-field
+                label="Days Embalming"
+                v-model="form.days_embalming"
+                hint="Days Embalming"
+                persistent-hint
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                label="Service Description"
+                v-model="form.service_description"
+                hint="Enter Service Description"
+                persistent-hint
+                :rules="rules.number_rule"
+              ></v-text-field>
             </v-col>
             <v-col cols="4">
-              <v-text-field label="Amount" v-model="form.amount"></v-text-field>
+              <v-text-field
+                label="Freebies Inclusion"
+                v-model="form.freebies_inclusion"
+                hint="Enter Freebies"
+                persistent-hint
+                :rules="rules.number_rule"
+              ></v-text-field>
+            </v-col>
+            <!-- INTERMENT SCHEDULE -->
+            <v-col cols="4">
+              <v-menu
+                v-model="interment_schedule"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+              >
+                <!-- <v-text-field slot="activator" aria-label="Date"></v-text-field> -->
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="form.interment_schedule"
+                    label="Interment Schedule"
+                    hint="YYYY-MM-DD format"
+                    persistent-hint
+                    prepend-icon="event"
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="form.interment_schedule"
+                  no-title
+                  @input="menu1 = false"
+                ></v-date-picker>
+              </v-menu>
             </v-col>
             <v-col cols="4">
+              <v-text-field
+                label="Contract Amount"
+                v-model="form.contract_amount"
+                prepend-icon="mdi-cash"
+                :rules="rules.number_rule"
+              ></v-text-field>
+            </v-col>
+            <!-- <v-col cols="4">
               <v-text-field
                 label="Down Payment"
                 v-model="form.down_payment"
@@ -139,7 +259,7 @@
                 prepend-icon="mdi-account-cash-outline"
                 disabled
               ></v-text-field>
-            </v-col>
+            </v-col> -->
             <v-col cols="4">
               <v-text-field
                 label="Branch ID"
@@ -178,6 +298,10 @@ export default {
       show: false,
       menu1: false,
       dialog: false,
+      date_created: false,
+      date_of_birth: false,
+      date_of_death: false,
+      interment_schedule: false,
 
       type_of_casket_list: [
         "Ordinary Wood Casket",
@@ -198,18 +322,22 @@ export default {
         basic_rule: [],
       },
       form: {
+        branch_id: this.$store.state.auth.user.branch_id,
         contract_no: "",
         name: "",
+        status: "",
         address: "",
         phone_number: "",
-        date_created: "",
         name_of_deceased: "",
+        date_of_birth: "",
+        date_of_death: "",
         type_of_casket: "",
-        amount: "",
-        down_payment: "",
-        balance: "",
-        branch_id: "",
-        deceased_date: "",
+        days_embalming: "",
+        service_description: "",
+        freebies_inclusion: "",
+        interment_schedule: "",
+        contract_amount: "",
+        date_created: "",
       },
     };
   },
@@ -219,10 +347,10 @@ export default {
     }),
     submit() {
       this.loading = true;
-      this.addService(this.form).then((response) => {
+      this.addService(this.form).then(() => {
         this.loading = false;
         alert("Successfully Added!");
-        location.reload();
+        // location.reload();
       });
     },
     change: function() {

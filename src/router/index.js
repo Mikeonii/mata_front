@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Dashboard from '../views/Dashboard.vue'
-import Payments from '../views/Payments.vue'
 import Summary from '../views/Summary.vue'
 import Profile from '../views/Profile.vue'
 import SignIn from '../views/SignIn.vue'
@@ -13,7 +11,7 @@ const routes = [
   {
     path: '/',
     name: 'Dashboard',
-    component: Dashboard,
+    component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
     beforeEnter: (to, from, next) => {
       if (!store.getters['auth/authenticated']) {
         return next({
@@ -28,7 +26,7 @@ const routes = [
   {
     path: '/payments',
     name: 'Payments',
-    component: Payments,
+    component: () => import(/* webpackChunkName: "Payments" */ '../views/Payments.vue'),
     beforeEnter: (to, from, next) => {
       if (!store.getters['auth/authenticated']) {
         return next({
@@ -43,7 +41,7 @@ const routes = [
   {
     path: '/summary',
     name: 'Summary',
-    component: Summary,
+    component: () => import(/* webpackChunkName: "Summary" */ '../views/Summary.vue'),
     beforeEnter: (to, from, next) => {
       if (!store.getters['auth/authenticated']) {
         return next({
@@ -58,7 +56,7 @@ const routes = [
   {
     path: '/profile/:service_id',
     name: 'Profile',
-    component: Profile,
+    component: () => import(/* webpackChunkName: "Profile" */ '../views/Profile.vue'),
     beforeEnter: (to, from, next) => {
       if (!store.getters['auth/authenticated']) {
         return next({

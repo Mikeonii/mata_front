@@ -14,7 +14,7 @@ require('@/store/subscriber')
 // axios base url
 
 // axios.defaults.baseURL = 'http://app-server.matadirectservice.com/api';
-axios.defaults.baseURL = 'http://192.168.1.5:8000/api';
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
 Vue.config.productionTip = false
 // every time the page loads, it attempts to authenticate using token from localstorage
 // in that way if the localstorage have the valid token, it will never invalidate the page.

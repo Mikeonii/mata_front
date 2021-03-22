@@ -123,12 +123,14 @@
     </v-row>
     <v-divider> </v-divider>
     <v-row>
-      <div class="container">
+      <div class="container" v-if="this.ready">
         <h4>
-          Total Services Rendered this Month of the year:
-          {{ total_service_month }}
+          Total Services Rendered this Month:
+          {{ this.total_service.count_month }}
         </h4>
-        <h4>Total Services Rendered this Year: {{ total_service_year }}</h4>
+        <h4>
+          Total Services Rendered this Year: {{ this.total_service.count_year }}
+        </h4>
       </div>
     </v-row>
     <v-btn
@@ -144,9 +146,9 @@ import { VclFacebook, VclInstagram } from "vue-content-loading";
 import { mapGetters, mapActions } from "vuex";
 import loading from "vue-loading-overlay";
 import jspdf from "jspdf";
-import html2canvas from "html2canvas";
-import axios from "axios";
-import { id } from "date-fns/locale";
+// import html2canvas from "html2canvas";
+// import axios from "axios";
+// import { id } from "date-fns/locale";
 // import js_file_download from "js-file-download";
 // import fileDownload from "js-file-download";
 import filesaver from "file-saver";
@@ -189,7 +191,7 @@ export default {
         total_discount_given: 0,
         cash_on_hand: 0,
       },
-      isLoading: false,
+      ready: false,
       fullPage: true,
     };
   },
@@ -200,6 +202,9 @@ export default {
       services: "services/services",
       token: "auth/token",
     }),
+    total_service() {
+      return this.$store.state.services.total_service;
+    },
   },
   methods: {
     async export_to_excel() {
@@ -214,7 +219,6 @@ export default {
           this.token
       );
     },
-
     ...mapActions({
       get_total_service: "services/get_total_service",
       get_collections: "payments/get_collections",
@@ -233,16 +237,13 @@ export default {
           year: this.selected_year,
           branch_id: branch_id,
         };
-
         this.get_collections(request).then(() => {
           this.collection_default = this.collections;
           this.isLoading = false;
         });
-
         // get total service
-        this.get_total_service(request).then((data) => {
-          this.total_service_month = data[0];
-          this.total_service_year = data[1];
+        this.get_total_service(request).then(() => {
+          this.ready = true;
         });
       }
     },

@@ -1,91 +1,141 @@
 <template>
   <div>
-    <!-- <Navbar /> -->
-    <!-- <h2 class="subheading grey--text">Welcome to Dashboard</h2> -->
     <v-container class="ma-2">
-      <!-- <p v-for="service in Services" :key="service.id">
-        {{ service.id }}: {{ service.name }}
-      </p> -->
-      <v-card>
-        <v-card-title
-          >Registered Contracts
-          <v-spacer></v-spacer>
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="search"
-          ></v-text-field>
-        </v-card-title>
+      <v-row
+        ><v-card>
+          <v-card-title
+            >Registered Contracts
 
-        <v-card-text>
-          <v-row>
-            <!-- <v-btn disabled color="primary" text>Selected: {{ sel_msg }}</v-btn> -->
-          </v-row>
-        </v-card-text>
+            <addModal />
+            <v-spacer></v-spacer>
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="search"
+            ></v-text-field>
+          </v-card-title>
 
-        <v-data-table
-          v-model="selected"
-          :loading="table_loading"
-          loading-text="Loading... Please wait"
-          :headers="headers"
-          :items="Services"
-          item-key="id"
-          sort-desc="false"
-          multi-sort
-          class="elevation-1 mx-5 mb-4 mt-3"
-          :search="search"
-          sort-by="created_at"
-          items-per-page="5"
-        >
-          <!-- <template>
-            <td @click="go_profile(service.id)"></td>
-          </template> -->
+          <v-data-table
+            v-model="selected"
+            :loading="table_loading"
+            loading-text="Loading... Please wait"
+            :headers="headers"
+            :items="services"
+            item-key="id"
+            multi-sort
+            class="elevation-1 mx-5 mb-4 mt-3"
+            sort-by="created_at"
+          >
+            <template v-slot:[`item.profile`]="{ item }">
+              <v-icon color="primary" class="mr-2" @click="show(item)">
+                mdi-account-circle
+              </v-icon>
+              <span class="caption blue--text"><strong>Profile</strong></span>
+            </template>
+            <template v-slot:[`item.edit`]="{ item }">
+              <Edit_Modal :item="item" />
+            </template>
+            <template v-slot:[`item.delete`]="{ item }">
+              <v-icon color="red" class="mr-2" @click="del(item)">
+                mdi-delete
+              </v-icon>
+              <span class="caption red--text"><strong>Delete</strong></span>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-row>
 
-          <template v-slot:[`item.profile`]="{ item }">
-            <v-icon color="primary" class="mr-2" @click="show(item)">
-              mdi-account-circle
-            </v-icon>
-            <span class="caption blue--text"><strong>Profile</strong></span>
-          </template>
-          <!-- <template v-slot:[`item.add_payment`]="{ item }">
-            <addPaymentModal :selected="item" />
-          </template> -->
-        </v-data-table>
-      </v-card>
-
-      <!-- modal -->
-      <div class="d-flex justify-end">
-        <addModal />
-      </div>
+      <h1 class="mt-5 mb-2">Filtered Service Contract</h1>
+      <v-divider></v-divider>
+      <v-row v-if="this.filtered_table_ready">
+        <!-- CHEQUE -->
+        <v-col cols="6">
+          <Pay_Card_Summary title="Cheque" :item="filtered_items.cheque"
+        /></v-col>
+        <v-col cols="6">
+          <Pay_Card_Summary
+            title="Cash On-hand"
+            :item="filtered_items.cash_on_hand"
+        /></v-col>
+        <v-col cols="6">
+          <Pay_Card_Summary title="MSWDO" :item="filtered_items.mswdo"
+        /></v-col>
+        <v-col cols="6">
+          <Pay_Card_Summary title="LGU" :item="filtered_items.lgu"
+        /></v-col>
+        <v-col cols="6">
+          <Pay_Card_Summary
+            title="DSWD-CARAGA"
+            :item="filtered_items.dswd_caraga"
+        /></v-col>
+        <v-col cols="6">
+          <Pay_Card_Summary title="PSWD" :item="filtered_items.pswd"
+        /></v-col>
+        <v-col cols="6">
+          <Pay_Card_Summary title="PGO" :item="filtered_items.pgo"
+        /></v-col>
+        <v-col cols="6">
+          <Pay_Card_Summary
+            title="Down Payment"
+            :item="filtered_items.down_payment"
+        /></v-col>
+      </v-row>
+      <div v-else><p class="">Loading Tables..</p></div>
     </v-container>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/component s/HelloWorld.vue'
 import Navbar from "@/components/Navbar.vue";
-
+import Edit_Modal from "@/components/Edit_Modal.vue";
 import addModal from "@/components/Add_Contract_Modal.vue";
-import format from "date-fns/format";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import addPaymentModal from "@/components/Add_Payment_Modal.vue";
+import Pay_Card_Summary from "@/components/Pay_Card_Summary.vue";
 export default {
   name: "Dashboard",
   components: {
     Navbar,
     addModal,
     addPaymentModal,
+    Edit_Modal,
+    Pay_Card_Summary,
   },
   data() {
     return {
-      singleSelect: true,
+      filtered_items: null,
+      filtered_table_ready: false,
+      item_name: [
+        "cheque",
+        "cash_on_hand",
+        "mswdo",
+        "lgu",
+        "dswd-caraga",
+        "pswd",
+        "pgo",
+        "down_payment",
+      ],
+      type_of_payment: [
+        "Cheque",
+        "Cash On-hand",
+        "MSWDO",
+        "LGU",
+        "DSWD Caraga",
+        "PSWD",
+        "PGO",
+        "Down Payment",
+      ],
       selected: [],
-
-      table_loading: false,
+      table_loading: true,
       search: "",
+      // services: [],
+
       headers: [
+        // { text: "Actions", value: "actions", width: "300px" },
+
         { text: "", value: "profile" },
+        { text: "", value: "edit" },
+        { text: "", value: "delete" },
 
         {
           text: "S/R No.",
@@ -110,7 +160,7 @@ export default {
         },
         {
           text: "Date Created",
-          value: "created_at",
+          value: "date_created",
         },
         {
           text: "Name of Deceased",
@@ -122,76 +172,71 @@ export default {
           value: "type_of_casket",
         },
         {
-          text: "Amount",
-          value: "amount",
-        },
-        {
-          text: "Down Payment",
-          value: "down_payment",
+          text: "Contract Amount",
+          value: "contract_amount",
         },
         {
           text: "Balance",
           value: "balance",
         },
       ],
-      Services: [],
     };
   },
   computed: {
     ...mapGetters({
-      data: "services/services",
       user_data: "auth/user",
     }),
-    sel_msg() {
-      const selectedRow = this.selected[0];
-      // return selectedRow ? `${selectedRow.name}` : "no data";
-      // selectedRow ? `${selectedRow.name}` : "no data";
-      // return selectedRow ? selectedRow.name : "no data";
-      if (selectedRow) {
-        return selectedRow.name;
+    ...mapState("services", ["services"]),
+  },
+
+  methods: {
+    async del(item) {
+      this.table_loading = true;
+      let confirm = window.confirm(
+        "Are you sure you want to delete " + item.name + "?"
+      );
+      if (confirm) {
+        await this.$store.dispatch("services/del_service", item.id, {
+          root: true,
+        });
+        this.table_loading = false;
       } else {
-        return "no data";
+        this.table_loading = false;
       }
     },
-  },
-  methods: {
-    ...mapActions({
-      get_services: "services/get",
-    }),
-
     show(item) {
       this.$router.push(`/profile/` + item.id);
+    },
+    get_services() {
+      this.$store
+        .dispatch("services/get", this.user_data.branch_id, {
+          root: true,
+        })
+        .then(() => {
+          this.table_loading = false;
+        });
+    },
+    get_filtered_service() {
+      this.$store
+        .dispatch(
+          "services/get_filtered_per_payment",
+          this.user_data.branch_id,
+          {
+            root: true,
+          }
+        )
+        .then((response) => {
+          this.filtered_table_ready = true;
+          this.filtered_items = response;
+          // console.log(response);
+        });
     },
   },
 
   created() {
-    this.table_loading = true;
-    this.get_services(this.user_data.branch_id).then(() => {
-      // assign to values.
-      this.table_loading = false;
-      this.Services = this.data;
-    });
-
-    // console.log(this.data.filter((x) => x.name == "Cindy Bogisich PhD"));
-
-    // db.collection("services").onSnapshot((res) => {
-    //   const changes = res.docChanges();
-
-    //   changes.forEach((change) => {
-    //     if (change.type == "added") {
-    //       // format mm-dd-yy format into do mm yyyy in date-fns
-    //       var x = change.doc.data().Date_Created;
-    //       var x = Date.parse(x);
-    //       var x = format(x, "do MMM yyyy");
-    //       this.Services.push({
-    //         id: change.doc.id,
-    //         formatted_date: x,
-
-    //         ...change.doc.data(),
-    //       });
-    //     }
-    //   });
-    // });
+    this.get_services();
+    this.get_filtered_service();
+    // get filtered services per payment
   },
 };
 </script>

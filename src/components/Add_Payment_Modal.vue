@@ -4,20 +4,17 @@
       Add Payment</v-btn
     >
 
-    <v-dialog v-model="dialog" max-width="800" class="">
+    <v-dialog v-model="dialog" max-width="500" class="">
       <v-card>
-        <v-img
-          class="white--text align end"
-          height="200"
-          src="https://i.imgur.com/Y3hqiHf.png"
-        ></v-img>
-        <v-card-title class="headline">Add Payment</v-card-title>
-        <v-card-subtitle>Form for adding a new payment</v-card-subtitle>
+        <v-toolbar color="primary white--text"
+          ><h1 class="headline">Add Payment</h1>
+        </v-toolbar>
+
         <!-- yow -->
         <!-- form -->
         <form class="container" ref="form">
-          <v-row class="mx-5">
-            <v-col cols="4">
+          <v-row class="px-5">
+            <v-col cols="5">
               <v-text-field
                 label="Service ID"
                 v-model="this.form.service_id"
@@ -25,7 +22,7 @@
                 disabled
               ></v-text-field>
             </v-col>
-            <v-col cols="12" lg="6">
+            <v-col cols="6">
               <v-menu
                 ref="menu1"
                 v-model="menu1"
@@ -54,7 +51,7 @@
               </v-menu>
             </v-col>
 
-            <v-col cols="4">
+            <v-col cols="5">
               <v-text-field
                 label="Amount"
                 v-model="form.amount"
@@ -69,7 +66,7 @@
                 v-model="form.mode_of_payment"
               ></v-select
             ></v-col>
-            <v-col cols="10">
+            <v-col cols="11">
               <v-text-field
                 label="Remarks"
                 v-model="form.remarks"
@@ -92,8 +89,7 @@
               ><v-btn :loding="loading" @click="submit()" dark color="primary"
                 >Add</v-btn
               >
-              <v-btn dark color="warning" @click="reset">Reset</v-btn
-              ><v-btn @click.stop="dialog = false" dark color=""
+              <v-btn @click.stop="dialog = false" dark color=""
                 >Cancel</v-btn
               ></v-card-actions
             >
@@ -128,6 +124,7 @@ export default {
         "DSWD-CARAGA",
         "PSWD",
         "PGO",
+        "Down Payment",
       ],
       rules: {
         number_rule: [(v) => v.length >= 3 || "Minimum length is 3 characters"],
@@ -167,10 +164,12 @@ export default {
     }),
     submit() {
       // check if mode of payment is not cash on hand
-      if (this.form.mode_of_payment != "Cash On-hand") {
+      if (
+        this.form.mode_of_payment != "Cash On-hand" ||
+        this.form.mode_of_payment != "Down Payment"
+      ) {
         this.form.verified = 0;
       }
-
       this.loading = true;
       this.add_payment(this.form).then((data) => {
         this.edit_current_state(data[0]);
@@ -182,12 +181,6 @@ export default {
         this.loading = false;
         this.dialog = false;
       });
-    },
-    reset: function() {
-      this.form.amount = "";
-      this.form.remarks = "";
-      this.form.date_created = "";
-      this.form.mode_of_payment = "";
     },
   },
   created() {},

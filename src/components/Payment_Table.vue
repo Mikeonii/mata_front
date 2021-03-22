@@ -15,6 +15,7 @@
         <add_payment_modal @addtopayment="insertObjectToPayments($event)" />
       </v-row>
     </v-card-text>
+    <!-- EDIT MODAL -->
     <v-dialog v-model="dialog" max-width="500">
       <v-card>
         <v-card-title class="headline grey lighten-2">
@@ -85,9 +86,9 @@
       :search="search"
     >
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon class="mr-2" @click="editItem(item)">
+        <!-- <v-icon class="mr-2" @click="editItem(item)">
           mdi-pencil
-        </v-icon>
+        </v-icon> -->
         <v-icon @click="deleteItem(item)">
           mdi-delete
         </v-icon>
@@ -177,21 +178,18 @@ export default {
 
       if (confirm("Verify Payment?")) {
         this.edit_item.verified = 1;
-        console.log(this.edit_item);
-        this.edit_payment(this.edit_item).then((data) => {
-          alert("saved");
+        this.edit_payment(this.edit_item).then((response) => {
+          // alert(response.data);
           // edit amount in state
-          var balance = data[0];
+          var balance = response[0];
           this.edit_current_state(balance);
         });
       }
     },
     submit_edit() {
       if (this.edited_index > -1) {
-        console.log(this.edit_item);
         Object.assign(this.payments[this.edited_index], this.edit_item);
       }
-
       this.edit_payment(this.edit_item).then(() => {
         alert("Edited Successfuly");
         this.dialog = false;

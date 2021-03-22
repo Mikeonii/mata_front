@@ -1,16 +1,21 @@
 <template>
   <div>
-    <profile_table v-if="ready" />
-    <service_info v-if="ready" :service="this.service" />
-    <v-card max-width="1200" class="mx-auto mt-5">
-      <payment_table v-if="ready" />
-    </v-card>
+    <div v-if="ready">
+      <profile_table :service="service" />
+      <service_info :service="this.service" />
+      <payment_table />
+    </div>
+    <div v-else>
+      <h2>Loading... Please wait</h2>
+    </div>
+
+    <v-card max-width="1200" class="mx-auto mt-5"> </v-card>
   </div>
 </template>
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Err_Component from "@/components/Err_Component.vue";
-import { VclFacebook, VclInstagram } from "vue-content-loading";
+import { VclFacebook } from "vue-content-loading";
 import { mapActions, mapGetters } from "vuex";
 
 const payment_table = () => ({
@@ -40,11 +45,7 @@ export default {
     profile_table,
     service_info,
   },
-  computed: {
-    ...mapGetters({
-      service_data: "services/service",
-    }),
-  },
+  computed: {},
   data() {
     return {
       ready: false,
@@ -53,8 +54,8 @@ export default {
     };
   },
   created() {
-    this.get_service(this.profile_id).then(() => {
-      this.service = this.service_data;
+    this.get_service(this.profile_id).then((response) => {
+      this.service = response.data;
       this.get_payments(this.profile_id).then(() => {
         this.ready = true;
       });
@@ -66,7 +67,6 @@ export default {
       get_service: "services/get_single",
       get_payments: "payments/get_payments",
     }),
-    refresh_component() {},
   },
 };
 </script>
