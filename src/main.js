@@ -11,8 +11,8 @@ import store from './store'
 
 // for authenticating thru headers with tokens 
 require('@/store/subscriber')
-// axios base url
 
+// axios base url
 // axios.defaults.baseURL = 'http://app-server.matadirectservice.com/api';
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
 Vue.config.productionTip = false

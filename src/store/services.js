@@ -20,8 +20,8 @@ export default {
     mutations: {
         // delete from the state
         DELETE_SERVICE(state, service_id) {
-            let videos = state.services.filter(s => s.id != service_id);
-            state.services = videos;
+            let serv = state.services.filter(s => s.id != service_id);
+            state.services = serv;
         },
         // update the state
         SET_SERVICE(state, data) {

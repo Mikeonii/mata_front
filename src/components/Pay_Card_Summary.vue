@@ -40,6 +40,7 @@ export default {
   props: [
     "title",
     "item",
+    "subtitle",
     // items,
     // headers,
   ],
@@ -56,8 +57,20 @@ export default {
           value: "contract_no",
         },
         {
-          text: "Name",
+          text: "Name of Client",
           value: "name",
+        },
+        {
+          text: "Name of Deceased",
+          value: "name_of_deceased",
+        },
+        {
+          text: "Amount",
+          value: "payments[0].amount",
+        },
+        {
+          text: "Remarks",
+          value: "payments[0].remarks",
         },
       ],
     };

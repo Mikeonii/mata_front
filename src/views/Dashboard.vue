@@ -50,33 +50,51 @@
       <v-row v-if="this.filtered_table_ready">
         <!-- CHEQUE -->
         <v-col cols="6">
-          <Pay_Card_Summary title="Cheque" :item="filtered_items.cheque"
+          <Pay_Card_Summary
+            title="Cheque"
+            subtitle="cheque"
+            :item="filtered_items.cheque"
         /></v-col>
         <v-col cols="6">
           <Pay_Card_Summary
             title="Cash On-hand"
+            subtitle="cash_on_hand"
             :item="filtered_items.cash_on_hand"
         /></v-col>
         <v-col cols="6">
-          <Pay_Card_Summary title="MSWDO" :item="filtered_items.mswdo"
+          <Pay_Card_Summary
+            title="MSWDO"
+            subtitle="mswdo"
+            :item="filtered_items.mswdo"
         /></v-col>
         <v-col cols="6">
-          <Pay_Card_Summary title="LGU" :item="filtered_items.lgu"
+          <Pay_Card_Summary
+            title="LGU"
+            subtitle="lgu"
+            :item="filtered_items.lgu"
         /></v-col>
         <v-col cols="6">
           <Pay_Card_Summary
             title="DSWD-CARAGA"
+            subtitle="dswd_caraga"
             :item="filtered_items.dswd_caraga"
         /></v-col>
         <v-col cols="6">
-          <Pay_Card_Summary title="PSWD" :item="filtered_items.pswd"
+          <Pay_Card_Summary
+            title="PSWD"
+            subtitle="pswd"
+            :item="filtered_items.pswd"
         /></v-col>
         <v-col cols="6">
-          <Pay_Card_Summary title="PGO" :item="filtered_items.pgo"
+          <Pay_Card_Summary
+            title="PGO"
+            subtitle="pgo"
+            :item="filtered_items.pgo"
         /></v-col>
         <v-col cols="6">
           <Pay_Card_Summary
             title="Down Payment"
+            subtitle="down_payment"
             :item="filtered_items.down_payment"
         /></v-col>
       </v-row>

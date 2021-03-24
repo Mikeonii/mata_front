@@ -165,8 +165,16 @@ export default {
     print_service() {
       const id = this.$route.params.service_id;
       const branch_id = this.service.data.branch_id;
+      // window.open(
+      //   "http://127.0.0.1:8000/print_contract/" +
+      //     id +
+      //     "/" +
+      //     branch_id +
+      //     "?token=" +
+      //     this.token
+      // );
       window.open(
-        "http://127.0.0.1:8000/print_contract/" +
+        "http://app-server.matadirectservice.com/print_contract/" +
           id +
           "/" +
           branch_id +

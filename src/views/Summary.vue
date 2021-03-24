@@ -208,8 +208,18 @@ export default {
   },
   methods: {
     async export_to_excel() {
+      // window.open(
+      //   "http://127.0.0.1:8000/print_summary/" +
+      //     this.months.indexOf(this.selected_month) +
+      //     "/" +
+      //     this.selected_year +
+      //     "/" +
+      //     this.user.branch_id +
+      //     "?token=" +
+      //     this.token
+      // );
       window.open(
-        "http://127.0.0.1:8000/print_summary/" +
+        "http://app-server.matadirectservice.com/print_summary/" +
           this.months.indexOf(this.selected_month) +
           "/" +
           this.selected_year +
