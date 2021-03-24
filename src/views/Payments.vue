@@ -2,6 +2,7 @@
   <div class="payments">
     <!-- <Navbar /> -->
     <h1>Payments</h1>
+    <!-- fucking changes -->
   </div>
 </template>
 
