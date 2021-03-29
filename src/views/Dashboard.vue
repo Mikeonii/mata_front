@@ -252,7 +252,12 @@ export default {
   },
 
   created() {
-    this.get_services();
+    // if the services array in state is empty, get the latest. if not ignore
+    if (this.$store.state.services.services.length == 0) {
+      this.get_services();
+    } else {
+      this.table_loading = false;
+    }
     this.get_filtered_service();
     // get filtered services per payment
   },

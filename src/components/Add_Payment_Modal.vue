@@ -86,7 +86,11 @@
 
             <v-spacer></v-spacer>
             <v-card-actions class="d-flex justify-end"
-              ><v-btn :loding="loading" @click="submit()" dark color="primary"
+              ><v-btn
+                :loading="this.loading"
+                @click="submit()"
+                dark
+                color="primary"
                 >Add</v-btn
               >
               <v-btn @click.stop="dialog = false" dark color=""
@@ -170,17 +174,22 @@ export default {
       ) {
         this.form.verified = 0;
       }
-      this.loading = true;
-      this.add_payment(this.form).then((data) => {
-        this.edit_current_state(data[0]);
+      // check if date is empty
+      if (this.form.date_created == "") {
+        alert("Please enter date");
+      } else {
+        this.loading = true;
+        this.add_payment(this.form).then((data) => {
+          this.edit_current_state(data[0]);
 
-        // send this to payment table
-        this.$emit("addtopayment", data[1]);
+          // send this to payment table
+          this.$emit("addtopayment", data[1]);
 
-        alert("success");
-        this.loading = false;
-        this.dialog = false;
-      });
+          alert("success");
+          this.loading = false;
+          this.dialog = false;
+        });
+      }
     },
   },
   created() {},

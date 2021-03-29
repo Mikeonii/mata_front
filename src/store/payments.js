@@ -26,23 +26,15 @@ export default ({
     },
     actions: {
         async get_collections({ commit }, request) {
-
             request.month += 1
+            let response = await axios.get(
+                "/payments/total_collections/"
+                + request.month
+                + '/' + request.year
+                + '/' + request.branch_id);
 
-            let url = "/payments/total_collections/" + request.month + '/' + request.year + '/' + request.branch_id;
-            let response = await axios.get(url);
-
-            let collections = {
-                "dswd": response.data[0],
-                "mswdo": response.data[1],
-                "lgu": response.data[2],
-                "pswd": response.data[3],
-                "cheque": response.data[4],
-                "total_discount": response.data[5],
-                "cash_on_hand": response.data[6],
-                "total_cash": response.data[7]
-            }
-            commit('SET_COLLECTIONS', collections)
+            // commit('SET_COLLECTIONS', response.data);
+            return response;
 
         },
         async add_payment({ }, form) {

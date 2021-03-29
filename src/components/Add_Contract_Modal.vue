@@ -208,16 +208,15 @@
               ></v-text-field>
             </v-col>
             <!-- INTERMENT SCHEDULE -->
-            <v-col cols="4">
-              <v-menu
+            <!-- <v-col cols="4"> -->
+            <!-- <v-menu
                 v-model="interment_schedule"
                 transition="scale-transition"
                 offset-y
                 max-width="290px"
                 min-width="290px"
-              >
-                <!-- <v-text-field slot="activator" aria-label="Date"></v-text-field> -->
-                <template v-slot:activator="{ on, attrs }">
+              > -->
+            <!-- <template v-slot:activator="{ on, attrs }">
                   <v-text-field
                     v-model="form.interment_schedule"
                     label="Interment Schedule"
@@ -233,8 +232,8 @@
                   no-title
                   @input="menu1 = false"
                 ></v-date-picker>
-              </v-menu>
-            </v-col>
+              </v-menu> -->
+            <!-- </v-col> -->
             <v-col cols="4">
               <v-text-field
                 label="Contract Amount"
@@ -272,7 +271,7 @@
 
             <v-spacer></v-spacer>
             <v-card-actions class="d-flex justify-end"
-              ><v-btn :loding="loading" @click="submit" dark color="primary"
+              ><v-btn :loading="loading" @click="submit" dark color="primary"
                 >Add</v-btn
               >
               <v-btn dark color="warning" @click="reset">Reset</v-btn

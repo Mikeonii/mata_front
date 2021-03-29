@@ -57,10 +57,17 @@ export default {
 
     // async means to wait for the response back to api
     submit() {
-      console.log(this.form);
       this.loading = true;
       this.signIn(this.form)
         .then(() => {
+          // get services
+          this.$store.dispatch(
+            "services/get",
+            this.$store.state.auth.user.branch_id,
+            {
+              root: true,
+            }
+          );
           this.loading = false;
           this.$router.push(`/`);
         })

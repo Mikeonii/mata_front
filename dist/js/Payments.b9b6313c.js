@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["Payments"],{b755:function(e,n,t){"use strict";t.r(n);var a=function(){var e=this,n=e.$createElement;e._self._c;return e._m(0)},s=[function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",{staticClass:"payments"},[t("h1",[e._v("Payments")])])}],r=t("d178"),c={name:"Summary",components:{Navbar:r["a"]}},l=c,u=t("2877"),i=Object(u["a"])(l,a,s,!1,null,null,null);n["default"]=i.exports}}]);
-//# sourceMappingURL=Payments.b9b6313c.js.map

@@ -18,19 +18,21 @@
         </v-select>
       </v-col>
       <v-col>
-        <v-btn color="primary" @click="search()">Search</v-btn>
+        <v-btn color="primary" @click="search()" :loading="this.is_loading"
+          >Search</v-btn
+        >
       </v-col>
     </v-row>
     <v-divider></v-divider>
-    <loading :active.sync="isLoading" :can-cancel="true"></loading>
+    <loading :active.sync="is_loading" :can-cancel="true"></loading>
     <v-row>
       <v-col cols="4">
         <v-card class="mx-2">
           <div class="mx-5">
-            <h4>Amount of Cash Collected</h4>
+            <h4>Cheque</h4>
             <v-divider></v-divider>
             <p>
-              Php:<span>{{ this.collection_default.total_cash }}</span>
+              Php:<span>{{ this.collection_default.cheque }}</span>
             </p>
           </div>
         </v-card>
@@ -38,10 +40,10 @@
       <v-col cols="3">
         <v-card class="mx-2">
           <div class="mx-5">
-            <h4>DSWD</h4>
+            <h4>Cash On-hand</h4>
             <v-divider></v-divider>
             <p>
-              Php:<span>{{ this.collection_default.dswd }}</span>
+              Php:<span>{{ this.collection_default.cash_on_hand }}</span>
             </p>
           </div>
         </v-card>
@@ -74,10 +76,10 @@
       <v-col cols="3">
         <v-card class="mx-2">
           <div class="mx-5">
-            <h4>PSWD</h4>
+            <h4>DSWD-CARAGA</h4>
             <v-divider></v-divider>
             <p>
-              Php:<span>{{ this.collection_default.pswd }}</span>
+              Php:<span>{{ this.collection_default.dswd_caraga }}</span>
             </p>
           </div>
         </v-card>
@@ -85,10 +87,10 @@
       <v-col cols="3">
         <v-card class="mx-2">
           <div class="mx-5">
-            <h4>Cheque</h4>
+            <h4>PSWD</h4>
             <v-divider></v-divider>
             <p>
-              Php:<span>{{ this.collection_default.cheque }}</span>
+              Php:<span>{{ this.collection_default.pswd }}</span>
             </p>
           </div>
         </v-card>
@@ -99,12 +101,10 @@
       <v-col cols="4">
         <v-card class="mx-2">
           <div class="mx-5">
-            <h4>Total Discount Given</h4>
+            <h4>PGO</h4>
             <v-divider></v-divider>
             <p>
-              Php:<span>{{
-                this.collection_default.total_discount_given
-              }}</span>
+              Php:<span>{{ this.collection_default.pgo }}</span>
             </p>
           </div>
         </v-card>
@@ -112,10 +112,23 @@
       <v-col cols="3">
         <v-card class="mx-2">
           <div class="mx-5">
-            <h4>Cash on hand</h4>
+            <h4>Down Payment</h4>
             <v-divider></v-divider>
             <p>
-              Php:<span>{{ this.collection_default.cash_on_hand }}</span>
+              Php:<span>{{ this.collection_default.down_payment }}</span>
+            </p>
+          </div>
+        </v-card>
+      </v-col>
+      <v-col cols="3">
+        <v-card class="mx-2">
+          <div class="mx-5">
+            <h4>Total</h4>
+            <v-divider></v-divider>
+            <p>
+              Php:<span>{{
+                this.collection_default.total_cash_collected
+              }}</span>
             </p>
           </div>
         </v-card>
@@ -161,6 +174,7 @@ export default {
   },
   data() {
     return {
+      is_loading: false,
       res: null,
       total_service_month: 0,
       total_service_year: 0,
@@ -181,16 +195,17 @@ export default {
         "November",
         "December",
       ],
-      collection_default: {
-        total_cash: 0,
-        dswd: 0,
-        mswdo: 0,
-        lgu: 0,
-        pswd: 0,
-        cheque: 0,
-        total_discount_given: 0,
-        cash_on_hand: 0,
-      },
+      collection_default: [],
+      // collection_default: {
+      //   total_cash: 0,
+      //   dswd: 0,
+      //   mswdo: 0,
+      //   lgu: 0,
+      //   pswd: 0,
+      //   cheque: 0,
+      //   total_discount_given: 0,
+      //   cash_on_hand: 0,
+      // },
       ready: false,
       fullPage: true,
     };
@@ -238,8 +253,8 @@ export default {
       if (this.selected_month == null || this.selected_year == null) {
         alert("Please fill all the blanks");
       } else {
-        this.isLoading = true;
-        // this.collection_default = null;
+        this.is_loading = true;
+
         let month_index = this.months.indexOf(this.selected_month);
         let branch_id = this.user.branch_id;
         let request = {
@@ -247,9 +262,9 @@ export default {
           year: this.selected_year,
           branch_id: branch_id,
         };
-        this.get_collections(request).then(() => {
-          this.collection_default = this.collections;
-          this.isLoading = false;
+        this.get_collections(request).then((response) => {
+          this.collection_default = response.data;
+          this.is_loading = false;
         });
         // get total service
         this.get_total_service(request).then(() => {

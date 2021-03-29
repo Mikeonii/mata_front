@@ -32,7 +32,7 @@ export default {
 
         // make request to api but commit to mutations
         async signin({ dispatch }, credentials) {
-            console.log(credentials)
+
             let response = await axios.post("auth/signin", credentials)
             return dispatch('attempt', response.data.token)
         },
@@ -53,6 +53,9 @@ export default {
                 let response = await axios.get('auth/me')
                 // if it is true, set_user to response 
                 commit('SET_USER', response.data)
+                // get services
+                // this.$store.dispatch('services/get', response.data.branch_id, { root: true });
+
             } catch (e) {
                 // if errors occurs set state to null
                 commit('SET_TOKEN', null)
