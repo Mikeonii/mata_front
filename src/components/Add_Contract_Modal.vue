@@ -127,7 +127,6 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
                     v-model="form.date_of_birth"
-                    :value="formattedDate"
                     label="Date of Birth"
                     hint="YYYY-MM-DD format"
                     persistent-hint
@@ -207,33 +206,6 @@
                 :rules="rules.number_rule"
               ></v-text-field>
             </v-col>
-            <!-- INTERMENT SCHEDULE -->
-            <!-- <v-col cols="4"> -->
-            <!-- <v-menu
-                v-model="interment_schedule"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px"
-              > -->
-            <!-- <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="form.interment_schedule"
-                    label="Interment Schedule"
-                    hint="YYYY-MM-DD format"
-                    persistent-hint
-                    prepend-icon="event"
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="form.interment_schedule"
-                  no-title
-                  @input="menu1 = false"
-                ></v-date-picker>
-              </v-menu> -->
-            <!-- </v-col> -->
             <v-col cols="4">
               <v-text-field
                 label="Contract Amount"
@@ -242,23 +214,6 @@
                 :rules="rules.number_rule"
               ></v-text-field>
             </v-col>
-            <!-- <v-col cols="4">
-              <v-text-field
-                label="Down Payment"
-                v-model="form.down_payment"
-                prepend-icon="mdi-cash"
-                @input="change"
-              ></v-text-field
-            ></v-col>
-            <v-col cols="4">
-              <v-text-field
-                label="Balance"
-                v-model="form.balance"
-                :value="form.balance"
-                prepend-icon="mdi-account-cash-outline"
-                disabled
-              ></v-text-field>
-            </v-col> -->
             <v-col cols="4">
               <v-text-field
                 label="Branch ID"
@@ -345,6 +300,7 @@ export default {
       addService: "services/addService",
     }),
     submit() {
+      console.log(this.form);
       this.loading = true;
       this.addService(this.form).then(() => {
         this.loading = false;
@@ -366,10 +322,10 @@ export default {
     ...mapGetters({
       user: "auth/user",
     }),
-    formattedDate() {
-      var x = Date.parse(this.form.date_created);
-      return this.form.date_created ? format(x, "do MMM yyyy") : "";
-    },
+    // formattedDate() {
+    //   var x = Date.parse(this.form.date_created);
+    //   return this.form.date_created ? format(x, "do MMM yyyy") : "";
+    // },
   },
 };
 </script>

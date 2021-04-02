@@ -54,23 +54,23 @@ export default {
         },
         {
           text: "Contract No.",
-          value: "contract_no",
+          value: "service.contract_no",
         },
         {
           text: "Name of Client",
-          value: "name",
+          value: "service.name",
         },
         {
           text: "Name of Deceased",
-          value: "name_of_deceased",
+          value: "service.name_of_deceased",
         },
         {
           text: "Amount",
-          value: "payments[0].amount",
+          value: "amount",
         },
         {
           text: "Remarks",
-          value: "payments[0].remarks",
+          value: "remarks",
         },
       ],
     };
