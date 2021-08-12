@@ -25,6 +25,7 @@
             multi-sort
             class="elevation-1 mx-5 mb-4 mt-3"
             sort-by="created_at"
+            :search="search"
           >
             <template v-slot:[`item.profile`]="{ item }">
               <v-icon color="primary" class="mr-2" @click="show(item)">
@@ -97,6 +98,18 @@
             subtitle="down_payment"
             :item="filtered_items.down_payment"
         /></v-col>
+        <v-col cols="6">
+          <Pay_Card_Summary
+            title="Discount"
+            subtitle="down_payment"
+            :item="filtered_items.discount"
+        /></v-col>
+        <v-col cols="6">
+          <Pay_Card_Summary
+            title="Plan Contribution"
+            subtitle="down_payment"
+            :item="filtered_items.plan_contribution"
+        /></v-col>
       </v-row>
       <div v-else><p class="">Loading Tables..</p></div>
     </v-container>
@@ -121,6 +134,7 @@ export default {
   },
   data() {
     return {
+      search: "",
       filtered_items: null,
       filtered_table_ready: false,
       item_name: [

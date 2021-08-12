@@ -55,6 +55,7 @@ export default {
             // console.log(branch_id);
             let response = await axios.get('/get_filtered_service/' + branch_id);
             return response.data;
+
         },
         edit_current_state({ commit }, request) {
             commit('EDIT_STATE', request)
@@ -65,9 +66,9 @@ export default {
             commit('SET_TOTAL_SERVICE', response.data);
         },
 
-        async edit_service_info({ }, form) {
+        async edit_service_info({ commit }, form) {
             let response = await axios.put("/edit_service_info", form);
-            return response
+            commit('EDIT_SERVICE', response.data);
         },
 
         async edit_service({ commit }, form) {

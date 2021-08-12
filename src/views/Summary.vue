@@ -123,6 +123,28 @@
       <v-col cols="3">
         <v-card class="mx-2">
           <div class="mx-5">
+            <h4>Discount</h4>
+            <v-divider></v-divider>
+            <p>
+              Php:<span>{{ this.collection_default.discount }}</span>
+            </p>
+          </div>
+        </v-card>
+      </v-col>
+      <v-col cols="3">
+        <v-card class="mx-2">
+          <div class="mx-5">
+            <h4>Plan Contribution</h4>
+            <v-divider></v-divider>
+            <p>
+              Php:<span>{{ this.collection_default.plan_contribution }}</span>
+            </p>
+          </div>
+        </v-card>
+      </v-col>
+      <v-col cols="3">
+        <v-card class="mx-2">
+          <div class="mx-5">
             <h4>Total</h4>
             <v-divider></v-divider>
             <p>
@@ -262,6 +284,7 @@ export default {
           year: this.selected_year,
           branch_id: branch_id,
         };
+        // get collections
         this.get_collections(request).then((response) => {
           this.collection_default = response.data;
           this.is_loading = false;

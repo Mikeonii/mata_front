@@ -129,6 +129,8 @@ export default {
         "PSWD",
         "PGO",
         "Down Payment",
+        "Discount",
+        "Plan Contribution",
       ],
       rules: {
         number_rule: [(v) => v.length >= 3 || "Minimum length is 3 characters"],

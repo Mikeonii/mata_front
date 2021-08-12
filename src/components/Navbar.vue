@@ -33,7 +33,7 @@
                 >Hello! {{ user.name }}</v-list-item-title
               >
               <v-list-item-subtitle class="blue--text text--lighten-3"
-                >Logged as: Cantilan User</v-list-item-subtitle
+                >Mata Direct Service Management</v-list-item-subtitle
               >
             </v-list-item-content>
           </v-list-item>
@@ -119,6 +119,7 @@ export default {
     ...mapGetters({
       authenticated: "auth/authenticated",
       user: "auth/user",
+      loading_out: "1",
     }),
   },
   data() {
@@ -150,7 +151,9 @@ export default {
       signOutActions: "auth/signOut",
     }),
     signOut() {
+      this.loading_out = "2";
       this.signOutActions().then(() => {
+        this.loading_out = "1";
         this.$router.push(`/signin`);
       });
     },

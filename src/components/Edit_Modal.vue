@@ -39,6 +39,11 @@
               v-model="form.phone_number"
             ></v-text-field>
             <v-text-field
+              label="Religion"
+              prepend-icon=""
+              v-model="form.religion"
+            ></v-text-field>
+            <v-text-field
               label="Name of Deceased"
               prepend-icon=""
               v-model="form.name_of_deceased"
@@ -73,11 +78,11 @@
               prepend-icon=""
               v-model="form.freebies_inclusion"
             ></v-text-field>
-            <v-text-field
+            <!-- <v-text-field
               label="Interment Schedule"
               prepend-icon=""
               v-model="form.interment_schedule"
-            ></v-text-field>
+            ></v-text-field> -->
             <v-text-field
               label="Contract Amount"
               prepend-icon=""
@@ -118,10 +123,10 @@ export default {
         days_embalming: this.item.days_embalming,
         service_description: this.item.service_description,
         freebies_inclusion: this.item.freebies_inclusion,
-        interment_schedule: this.item.interment_schedule,
         contract_amount: this.item.contract_amount,
         date_created: this.item.date_created,
         branch_id: this.item.branch_id,
+        religion: this.item.religion,
       },
     };
   },

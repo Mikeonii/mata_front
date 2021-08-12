@@ -25,12 +25,20 @@
             <h2 class="heading-2">{{ this.service.data.name }}</h2>
           </v-card-text>
         </v-col>
-        <v-col cols="5">
+        <v-col cols="3">
           <v-card-subtitle class="pb-0">
             Address:
           </v-card-subtitle>
           <v-card-text class="text--primary">
             <h2 class="heading-2">{{ this.service.data.address }}</h2>
+          </v-card-text>
+        </v-col>
+        <v-col cols="3">
+          <v-card-subtitle class="pb-0">
+            Religion:
+          </v-card-subtitle>
+          <v-card-text class="text--primary">
+            <h2 class="heading-2">{{ this.service.data.religion }}</h2>
           </v-card-text>
         </v-col>
       </v-row>
@@ -44,7 +52,7 @@
             <h2 class="heading-2">{{ this.service.data.date_created }}</h2>
           </v-card-text>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="2">
           <v-card-subtitle class="pb-0">
             Phone Number:
           </v-card-subtitle>

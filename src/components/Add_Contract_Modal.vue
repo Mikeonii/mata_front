@@ -87,6 +87,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                    readonly
                     v-model="form.date_created"
                     label="Date Created"
                     hint="YYYY-MM-DD format"
@@ -114,7 +115,7 @@
             </v-col>
 
             <!-- DATE OF BIRTH -->
-            <v-col cols="3">
+            <v-col cols="4">
               <v-menu
                 ref="date_of_birth"
                 v-model="date_of_birth"
@@ -126,6 +127,7 @@
                 <!-- <v-text-field slot="activator" aria-label="Date"></v-text-field> -->
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                    readonly
                     v-model="form.date_of_birth"
                     label="Date of Birth"
                     hint="YYYY-MM-DD format"
@@ -142,6 +144,17 @@
                 ></v-date-picker>
               </v-menu>
             </v-col>
+            <!-- RELIGION -->
+            <v-col cols="4">
+              <v-text-field
+                type="text"
+                error-count=""
+                placeholder="Religion"
+                label=""
+                prepend-icon="mdi-church"
+                v-model="form.religion"
+              ></v-text-field>
+            </v-col>
             <!-- DATE OF DEATH -->
             <v-col cols="4">
               <v-menu
@@ -154,6 +167,7 @@
                 <!-- <v-text-field slot="activator" aria-label="Date"></v-text-field> -->
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                    readonly
                     v-model="form.date_of_death"
                     label="Date of Death"
                     hint="YYYY-MM-DD format"
@@ -180,7 +194,7 @@
                 :rules="rules.number_rule"
               ></v-text-field>
             </v-col>
-            <v-col cols="2">
+            <v-col cols="4">
               <v-text-field
                 label="Days Embalming"
                 v-model="form.days_embalming"
@@ -188,7 +202,7 @@
                 persistent-hint
               ></v-text-field>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="4">
               <v-text-field
                 label="Service Description"
                 v-model="form.service_description"
@@ -292,6 +306,7 @@ export default {
         interment_schedule: "",
         contract_amount: "",
         date_created: "",
+        religion: "",
       },
     };
   },
